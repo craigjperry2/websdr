@@ -1,5 +1,8 @@
 # Craig's Web SDR
 
+View the 2-metre VHF amateur radio band in real time via a cheap RTL SDR
+dongle with appropriate antenna.
+
 # Developer Setup
 
 There are 3 sub-projects:
@@ -26,3 +29,8 @@ strictly required so feel free to use one common venv if you prefer.
   1. `python -m pip install --U pip`
   1. `pip install -r requirements.txt`
 1. Launch jupyter: `jupyter` (i'm using vscode's notebook support instead)
+
+## backend Sub-Project
+
+Requirements and setup are the same as described under the notebook Sub-Project
+above, with the exception of the last step - Jupyter is not used here.
