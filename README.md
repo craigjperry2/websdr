@@ -1,36 +1,81 @@
 # Craig's Web SDR
 
-View the 2-metre VHF amateur radio band in real time via a cheap RTL SDR
-dongle with appropriate antenna.
+View radio spectrum in real-time via a cheap RTL SDR dongle. This is just
+a toy project for me to explore some software development ideas.
+
 
 # Developer Setup
 
-There are 3 sub-projects:
 
-* notebook: Jupyter notebooks exploring how to work with PyRTLSDR
-* backend: FastAPI based RESTful SDR server, hosts the SDR used by clients
-* frontend: Svelte based SDR client
+## Software Architecture
 
-## notebooks Sub-Project
+I wanted to try the [C4 Model](https://c4model.com/). The following diagrams zoom in from a high level *System Context*, through a *Container* level view and finally down to a software *Component* view.
+
+[![System Context](docs/c4-diagrams/system-context.svg)](https://docs.google.com/drawings/d/1wvggrY-X2u0tnscYpSjtcwoO0D5ficgHmu_-W-CKxaE)
+[![Containers](docs/c4-diagrams/containers.svg)](https://docs.google.com/drawings/d/1USTx74Sn3i6TVZlyy26hzhkeudmNLfpeVNOwFR05lqU)
+[![Components](docs/c4-diagrams/components.svg)](https://docs.google.com/drawings/d/1stXhaskBHW0WGkbCggHIabUdGVXizONAG1BldyojRpE)
+
+Diagrams usually end up stale. One idea could be to capture them as code using the [FC4 Framework](https://fundingcircle.github.io/fc4-framework/) but for now they are produced by hand in Google Drawings. Taking a step back, only the Component diagram looks useful to me and my IDE can instantly draw a fairly convincing one of those at any time from a snapshot of the source code.
+
+
+## The TODO List
+
+In this project, i'm experimenting with replacing my normal TODO.md file with (acceptance) test cases. There's been some merit to this but they can't really replace simple task lists for keeping me focussed and on-track.
+
+
+### Project
+
+* [X] ~~*Complete a spike to learn FastAPI, asyncio, pyRtlsdr & SciPy. Work out an architecture that keeps out of the way and makes software changes cheap & fast.*~~ [2019-11-22]
+
+
+### Server
+
+* [X] ~~*Sketch out a web service using FastAPI*~~ [2019-11-16]
+* [X] ~~*Figure out how to read samples asynchronously from the SDR*~~ [2019-11-17]
+  * @note I don't get exactly the # of samples asked for every time
+* [X] ~~*Publish on github*~~ [2019-11-17]
+* [X] ~~*Calculate FFT (DFT) of samples and deliver them via JSON*~~ [2019-11-18]
+  * @note too much data for JSON arrays, need to swap string repr (4mb / message) to numeric
+  * @followup how to calculate db / freq with numpy?
+  * @follow-up how to calibrate the db scale?
+  * @follow-up how to limit frequency window?
+* [X] ~~*Write array of uint8, array size = bandwidth*~~ [2019-11-18]
+  * @follow-up what happens with concurrent WS users?
+  * @follow-up how to pause the stream after all WS clients gone?
+* [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
+* [ ] Use the spike experience to re-build the service sketch, nicely
+
+
+### Client
+
+* [ ] Serve a svelte SPA
+  * @follow-up how does the svelte build pipeline work?
+* [ ] Render periodigrams
+  * @follow-up what's a performant way to draw a periodigram?
+  * @follow-up can a 2d canvas be GPU-accelerated in the browser?
+
+
+### Docs
+
+* [ ] Finish writing up the developer setup notes
+* [X] ~~*Create C4 Model diagrams*~~ [2019-11-23]
+
+
+## Developer Environment Setup
+
 
 ### Requirements
 
 * Windows, Linux or MacOS
-* Python 3.7+
+* Python 3.7+ - an up to date version of pip is required
 
-### Setup
 
-I've created separate virtual envs for backend and notebook, that's not
-strictly required so feel free to use one common venv if you prefer.
+### Steps
 
-1. `cd notebook`
-1. Create a Python virtualenv `python -m venv notebook/venv` and activate it
+1. `cd backend`
+1. Create a Python virtualenv `python -m venv venv` and activate it
 1. Install the dependencies into the venv, I had to update pip first
-  1. `python -m pip install --U pip`
-  1. `pip install -r requirements.txt`
-1. Launch jupyter: `jupyter` (i'm using vscode's notebook support instead)
-
-## backend Sub-Project
-
-Requirements and setup are the same as described under the notebook Sub-Project
-above, with the exception of the last step - Jupyter is not used here.
+  1. `python -m pip install -U pip`
+  1. Either `python setup.py develop` or `pip install -r requirements.txt` are supported. Both will install this package in editable mode into the venv alongside all the dependencies
+1. Launch your editor, i'm trialling VS Code for this project instead of my usual Intellij with the Python plugin
+1. Run the tests, either `python setup.py test` or `pytest` are supported. There are differences but they are mitigated in the project setup
