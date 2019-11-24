@@ -1,6 +1,8 @@
 import logging
 LOGGER = logging.getLogger()
 
+from pathlib import Path
+
 from fastapi import FastAPI
 from starlette.requests import Request
 from starlette.staticfiles import StaticFiles
@@ -11,8 +13,8 @@ from .broadcaster import sdr_websocket_broadcaster as sdr
 
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
+templates = Jinja2Templates(directory=str(Path(__file__).parent.absolute() / "templates"))
 
 
 @app.on_event("startup")
