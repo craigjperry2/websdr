@@ -76,6 +76,6 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
 1. Create a Python virtualenv `python -m venv venv` and activate it
 1. Install the dependencies into the venv, I had to update pip first
   1. `python -m pip install -U pip`
-  1. Either `python setup.py develop` or `pip install -r requirements.txt` are supported. Both will install this package in editable mode into the venv alongside all the dependencies
+  1. `pip install -r requirements.txt` will install this package in editable mode into the venv alongside all the dependencies
 1. Launch your editor, i'm trialling VS Code for this project instead of my usual Intellij with the Python plugin
 1. Run the tests, either `python setup.py test` or `pytest` are supported. There are differences but they are mitigated in the project setup
