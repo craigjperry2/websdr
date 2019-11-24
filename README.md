@@ -57,7 +57,7 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
 
 ### Docs
 
-* [ ] Finish writing up the developer setup notes
+* [X] ~~*Finish writing up the developer setup notes*~~ [2019-11-24]
 * [X] ~~*Create C4 Model diagrams*~~ [2019-11-23]
 
 

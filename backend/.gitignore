@@ -2,3 +2,7 @@ venv/
 __pycache__/
 .eggs/
 *.egg-info/
+
+.vscode/
+.idea/
+*.iml
