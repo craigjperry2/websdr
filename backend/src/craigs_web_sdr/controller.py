@@ -145,6 +145,8 @@ async def broadcast(samples):
             if websocket.client_state != WebSocketState.CONNECTED:
                 LOGGER.debug("Reaping closed socket")
                 _WEBSOCKET_CLIENTS.remove(websocket)
+    
+    return True  # receive more sample callbacks
 
 
 def main(host='0.0.0.0', port=8000):

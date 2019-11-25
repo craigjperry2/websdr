@@ -26,7 +26,7 @@ async def _async_debug_on(event_loop):
 @pytest.fixture
 async def _mocked_callback():
     """Setup and teardown an _AsyncSdrSampler with a mock callback"""
-    m = CoroutineMock()
+    m = CoroutineMock(return_value=False)
     sdr = _AsyncSdrSampler()
     sdr.start(m)
     await asyncio.sleep(5)  # HACK: wait for pyrtlsdr bg thread to init
@@ -44,5 +44,5 @@ async def test_callback_is_provided_with_samples_data(_async_debug_on, _mocked_c
     assert len(latest_callback_param) > 0
 
     sample_data_element = latest_callback_param[0]
-    assert type(sample_data_element) is np.complex128
-    assert sample_data_element != np.complex128()  # i.e. sample is non-zero
+    assert type(sample_data_element) is np.float64
+    assert sample_data_element != np.float64()  # i.e. sample is non-zero

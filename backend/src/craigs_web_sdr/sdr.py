@@ -92,8 +92,7 @@ class _AsyncSdrSampler:
             self._sdr.sample_rate = 1.2e6  # 1.2 MHz, bandwidth
             self._sdr.center_freq = 102e6  # 102 MHz (in FM broadcast band)
             self._sdr.gain = 'auto'
-            # TODO: disabled nyquist freq sampling since each sample is 90mb!
-            self._sample_size = 8192  # ~300kb each after abs(Welch)
+            self._sample_size = self._sdr.sample_rate * 2  # Nyquist freq
             self._delay = delay
             asyncio.create_task(self._stream_samples_from_sdr())
     
@@ -108,7 +107,8 @@ class _AsyncSdrSampler:
 
         async for samples in self._sdr.stream(num_samples_or_bytes=self._sample_size):
             LOGGER.debug(f"Got {len(samples)} samples in a {type(samples)}")
-            await self._callback(np.absolute(samples))
+            if not await self._callback(np.absolute(samples)):
+                return
             await asyncio.sleep(self._delay)
 
 
