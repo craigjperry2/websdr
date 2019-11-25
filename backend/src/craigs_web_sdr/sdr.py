@@ -30,7 +30,7 @@ Examples
 ...     print('.', end='')
 ...
 >>> async def main():
-...     await sdr.start(dotter)
+...     sdr.start(dotter)
 ...
 >>> asyncio.ensure_future(main())
 >>> asyncio.get_event_loop().run_forever()

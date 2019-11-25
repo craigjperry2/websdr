@@ -36,23 +36,32 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
 * [X] ~~*Publish on github*~~ [2019-11-17]
 * [X] ~~*Calculate FFT (DFT) of samples and deliver them via JSON*~~ [2019-11-18]
   * @note too much data for JSON arrays, need to swap string repr (4mb / message) to numeric
-  * @followup how to calculate db / freq with numpy?
-  * @follow-up how to calibrate the db scale?
-  * @follow-up how to limit frequency window?
+  * ~~@followup how to calculate db / freq with numpy?~~
+    * Not possible without using a fixed gain and calibrating the receiver
+  * ~~@followup how to calibrate the db scale?~~
+    * Not practical without a signal of known frequency, bandwidth & power
+  * ~~@followup how to limit frequency window?~~
+    * The word "window" here could cause confusion with window functions. Size of FFT in scipy / numpy is a function of input ndarray length
 * [X] ~~*Write array of uint8, array size = bandwidth*~~ [2019-11-18]
-  * @follow-up what happens with concurrent WS users?
-  * @follow-up how to pause the stream after all WS clients gone?
+  * ~~@followup what happens with concurrent WS users?~~
+    * Each results in an async co-routine being created and has a reference to the websocket
+  * ~~@followup how to pause the stream after all WS clients gone?~~
+    * Happens automatically, if there are no clients, there are no running coroutines
 * [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
 * [ ] Use the spike experience to re-build the service sketch, nicely
+* [ ] Change architecture to improve use of parallel cpu cores
+  * put sdr reading & SDE calculation in another process (parallelism avoiding Python's GIL)
+  * use async comms to transfer the small (<= 2048 element ndarray>) to the webserver thread
+  * see also: https://stackoverflow.com/questions/15639779/why-does-multiprocessing-use-only-a-single-core-after-i-import-numpy
 
 
 ### Client
 
 * [ ] Serve a svelte SPA
-  * @follow-up how does the svelte build pipeline work?
+  * @followup how does the svelte build pipeline work?
 * [ ] Render periodigrams
-  * @follow-up what's a performant way to draw a periodigram?
-  * @follow-up can a 2d canvas be GPU-accelerated in the browser?
+  * @followup what's a performant way to draw a periodigram?
+  * @followup can a 2d canvas be GPU-accelerated in the browser?
 
 
 ### Docs
@@ -75,7 +84,7 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
 1. `cd backend`
 1. Create a Python virtualenv `python -m venv venv` and activate it
 1. Install the dependencies into the venv, I had to update pip first
-  1. `python -m pip install -U pip`
-  1. `pip install -r requirements.txt` will install this package in editable mode into the venv alongside all the dependencies
+    1. `python -m pip install -U pip`
+    1. `pip install -r requirements.txt` will install this package in editable mode into the venv alongside all the dependencies
 1. Launch your editor, i'm trialling VS Code for this project instead of my usual Intellij with the Python plugin
 1. Run the tests, either `python setup.py test` or `pytest` are supported. There are differences but they are mitigated in the project setup
