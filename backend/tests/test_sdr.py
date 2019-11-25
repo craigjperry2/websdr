@@ -45,4 +45,4 @@ async def test_callback_is_provided_with_samples_data(_async_debug_on, _mocked_c
 
     sample_data_element = latest_callback_param[0]
     assert type(sample_data_element) is np.float64
-    assert sample_data_element != np.float64()  # i.e. sample is non-zero
+    assert sample_data_element != 0  # i.e. ndarray default value
