@@ -16,12 +16,17 @@ setup(
     python_requires='>=3.7',
     # Minimal list here per https://packaging.python.org/discussions/install-requires-vs-requirements/
     install_requires=[
-        'fastapi[all]'
-        ,'numpy'
-        ,'scipy'
-        ,'pyrtlsdr'
+        'fastapi[all]',
+        'numpy',
+        'scipy',
+        'pyrtlsdr',
     ],
     setup_requires=[
         'pytest-runner',
-    ]
+    ],
+    entry_points={
+        'console_scripts': [
+            'backend = craigs_web_sdr.controller:main',
+        ]
+    },
 )
