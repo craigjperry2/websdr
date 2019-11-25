@@ -18,12 +18,12 @@ Feature: Estimate spectral density and broadcast to clients via websocket
       And the maps have <key> of <type> with values between <min> and <max>
 
     Examples:
-      | key      | type      | min  | max  | description                      |
-      | Flo      | int       | 1    | 2000 | Low edge frequency (MHz)         |
-      | Fhi      | int       | 1    | 2000 | High edge frequency (MHz)        |
-      | rbw      | int       | 500  | 2000 | Resolution bandwidth (Hz)        |
-      | Pxx      | List[int] | 512  | 2048 | List of power spectral densities |
-      | Pxx[0]   | int       | -150 | 0    | Power measurements (V^2/Hz)      |
-      | Pxx[123] | int       | -150 | 0    | Power measurements (V^2/Hz)      |
-      | Pxx[456] | int       | -150 | 0    | Power measurements (V^2/Hz)      |
-      | Pxx[511] | int       | -150 | 0    | Power measurements (V^2/Hz)      |
+      | key      | type      | min | max  | description                 |
+      | Flo      | int       | 1   | 2000 | Low edge frequency (MHz)    |
+      | Fhi      | int       | 1   | 2000 | High edge frequency (MHz)   |
+      | rbw      | int       | 500 | 2000 | Resolution bandwidth (Hz)   |
+      | Pxx      | List[f64] | 512 | 2048 | Power spectral densities    |
+      | Pxx[0]   | float64   | 0   | Inf  | Power measurements (V^2/Hz) |
+      | Pxx[123] | float64   | 0   | Inf  | Power measurements (V^2/Hz) |
+      | Pxx[456] | float64   | 0   | Inf  | Power measurements (V^2/Hz) |
+      | Pxx[511] | float64   | 0   | Inf  | Power measurements (V^2/Hz) |
