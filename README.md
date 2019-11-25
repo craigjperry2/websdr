@@ -3,6 +3,8 @@
 View radio spectrum in real-time via a cheap RTL SDR dongle. This is just
 a toy project for me to explore some software development ideas.
 
+[spectrum_measurements.feature](backend/tests/spectrum_measurements.feature) specifies the behaviour of the main functionality in this app.
+
 
 # Developer Setup
 
