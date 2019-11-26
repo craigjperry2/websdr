@@ -56,6 +56,7 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
   * use async comms to transfer the small (<= 2048 element ndarray>) to the webserver thread
   * see also: https://stackoverflow.com/questions/15639779/why-does-multiprocessing-use-only-a-single-core-after-i-import-numpy
 * [ ] Investigate why shutdown consumes 100% of a cpu core?
+* [ ] Centre psd like https://github.com/matplotlib/matplotlib/blob/d41775327c1101b3fefc6fcf0fdf12a1a0254d3f/lib/matplotlib/mlab.py#L571
 * [ ] Use pydantic to document the samples callback protocol?
 
         def samples_callback_protocol(samples: np.ndarray(dtype=np.complex128)):
