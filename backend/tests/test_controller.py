@@ -60,7 +60,6 @@ def test_sdr_startup_and_shutdown_events_are_triggered(mock_sdr):
     assert stopped == True
 
 
-
 @patch('craigs_web_sdr.controller.sdr')
 @pytest.mark.asyncio
 async def test_consumes_infinite_pings_on_sde_websocket(mock_sdr, ndarray_of_float, cleanup_websockets):
@@ -75,7 +74,7 @@ async def test_broadcasts_samples_data_to_clients(ndarray_of_float, cleanup_webs
     with client.websocket_connect("/sde") as client1:
         with client.websocket_connect("/sde") as client2:
 
-            await broadcast(ndarray_of_float)
+            await broadcast(ndarray_of_float.tolist())
             for c in [client1, client2]:
                 r = c.receive_text()
                 assert r == str(ndarray_of_float.tolist())

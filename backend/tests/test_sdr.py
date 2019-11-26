@@ -30,10 +30,8 @@ async def _mocked_callback():
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
 async def test_callback_is_provided_with_samples_data(
-    event_loop, _mocked_callback
+    _mocked_callback
 ):
-    event_loop.set_debug(True)
-
     _mocked_callback.assert_awaited()
     _mocked_callback.assert_called()
 
@@ -42,5 +40,5 @@ async def test_callback_is_provided_with_samples_data(
     assert len(latest_callback_param) > 0
 
     sample_data_element = latest_callback_param[0]
-    assert type(sample_data_element) is np.float64
-    assert sample_data_element != 0  # i.e. ndarray default value
+    assert type(sample_data_element) is np.complex128
+    assert sample_data_element != np.complex()  # i.e. default 0j value
