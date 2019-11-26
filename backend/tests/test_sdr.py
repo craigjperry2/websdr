@@ -18,12 +18,6 @@ def _has_rtl_sdr():
 
 
 @pytest.fixture
-async def _async_debug_on(event_loop):
-    """Convenience to enable asyncio debug mode in a test's event loop"""
-    event_loop.set_debug(True)
-
-
-@pytest.fixture
 async def _mocked_callback():
     """Setup and teardown an _AsyncSdrSampler with a mock callback"""
     m = CoroutineMock(return_value=False)
@@ -36,8 +30,10 @@ async def _mocked_callback():
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
 async def test_callback_is_provided_with_samples_data(
-    _async_debug_on, _mocked_callback
+    event_loop, _mocked_callback
 ):
+    event_loop.set_debug(True)
+
     _mocked_callback.assert_awaited()
     _mocked_callback.assert_called()
 
