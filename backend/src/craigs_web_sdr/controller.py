@@ -53,6 +53,7 @@ from starlette.websockets import WebSocket, WebSocketDisconnect, WebSocketState
 from websockets.exceptions import ConnectionClosedError
 
 from craigs_web_sdr.sdr import sdr
+from craigs_web_sdr.spectrum_density_estimator import spectrum_density_estimator
 
 
 app = FastAPI()
@@ -78,7 +79,7 @@ def init_sdr():
     """
 
     LOGGER.info("Performing SDR initialisation on application startup")
-    sdr.start(samples_callback=broadcast)
+    sdr.start(samples_callback=spectrum_density_estimator(broadcast))
 
 
 @app.on_event("shutdown")
@@ -147,7 +148,7 @@ async def broadcast(samples):
 
             if websocket.client_state == WebSocketState.CONNECTED:
                 try:
-                    await websocket.send_json(samples.tolist())
+                    await websocket.send_json(samples)
                 except (WebSocketDisconnect, ConnectionClosedError):
                     LOGGER.debug("Websocket dropped, will be reaped")
 
