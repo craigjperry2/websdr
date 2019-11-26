@@ -50,17 +50,13 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
   * ~~@followup how to pause the stream after all WS clients gone?~~
     * Happens automatically, if there are no clients, there are no running coroutines
 * [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
-* [ ] Use the spike experience to re-build the service sketch, nicely
+* [X] ~~*Use the spike experience to re-build the service sketch, nicely*~~ [2019-11-26]
 * [ ] Change architecture to improve use of parallel cpu cores
   * put sdr reading & SDE calculation in another process (parallelism avoiding Python's GIL)
   * use async comms to transfer the small (<= 2048 element ndarray>) to the webserver thread
   * see also: https://stackoverflow.com/questions/15639779/why-does-multiprocessing-use-only-a-single-core-after-i-import-numpy
 * [ ] Investigate why shutdown consumes 100% of a cpu core?
 * [ ] Centre psd like https://github.com/matplotlib/matplotlib/blob/d41775327c1101b3fefc6fcf0fdf12a1a0254d3f/lib/matplotlib/mlab.py#L571
-* [ ] Use pydantic to document the samples callback protocol?
-
-        def samples_callback_protocol(samples: np.ndarray(dtype=np.complex128)):
-            return True  # False if you don't want anymore callbacks
 
 
 ### Client
