@@ -32,6 +32,7 @@ Examples
 
 
 import logging
+
 LOGGER = logging.getLogger()
 
 import asyncio
@@ -91,17 +92,17 @@ class _AsyncSdrSampler:
             self._sdr = RtlSdrAio()
             self._sdr.sample_rate = 1.2e6  # 1.2 MHz, bandwidth
             self._sdr.center_freq = 102e6  # 102 MHz (in FM broadcast band)
-            self._sdr.gain = 'auto'
+            self._sdr.gain = "auto"
             self._sample_size = self._sdr.sample_rate * 2  # Nyquist freq
             self._delay = delay
             asyncio.create_task(self._stream_samples_from_sdr())
-    
+
     async def stop(self):
         """Stop sample collection and relinquish the SDR device"""
 
         await self._sdr.stop()
         self._sdr.close()
-    
+
     async def _stream_samples_from_sdr(self):
         """Throttle the rate of samples sent to the client's callback"""
 

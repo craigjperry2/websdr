@@ -35,10 +35,12 @@ async def _mocked_callback():
 
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
-async def test_callback_is_provided_with_samples_data(_async_debug_on, _mocked_callback):
+async def test_callback_is_provided_with_samples_data(
+    _async_debug_on, _mocked_callback
+):
     _mocked_callback.assert_awaited()
     _mocked_callback.assert_called()
-    
+
     latest_callback_param = _mocked_callback.call_args[0][0]
     assert type(latest_callback_param) is np.ndarray
     assert len(latest_callback_param) > 0

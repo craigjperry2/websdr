@@ -38,6 +38,7 @@ Is equivalent to:
 
 
 import logging
+
 LOGGER = logging.getLogger()
 
 import asyncio
@@ -55,11 +56,17 @@ from craigs_web_sdr.sdr import sdr
 
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
-templates = Jinja2Templates(directory=str(Path(__file__).parent.absolute() / "templates"))
+app.mount(
+    "/static",
+    StaticFiles(directory=Path(__file__).parent.absolute() / "static"),
+    name="static",
+)
+templates = Jinja2Templates(
+    directory=str(Path(__file__).parent.absolute() / "templates")
+)
 
 _WEBSOCKET_CLIENTS = []
-_WEBSOCKET_CLIENTS_LOCK= asyncio.Lock()
+_WEBSOCKET_CLIENTS_LOCK = asyncio.Lock()
 
 
 @app.on_event("startup")
@@ -114,7 +121,7 @@ async def sde(websocket: WebSocket):
         _WEBSOCKET_CLIENTS.append(websocket)
         clients = len(_WEBSOCKET_CLIENTS)
     LOGGER.info(f"Added client, there are {clients} connected")
-    
+
     try:
         while True:
             ping = await websocket.receive_text()
@@ -131,23 +138,25 @@ async def broadcast(samples):
     middleware to convert the underlying numpy ndarray to JSON.
 
     """
-    
+
     async with _WEBSOCKET_CLIENTS_LOCK:
         for websocket in _WEBSOCKET_CLIENTS:
-            LOGGER.debug(f"Broadcasting to next of {len(_WEBSOCKET_CLIENTS)} websockets")
+            LOGGER.debug(
+                f"Broadcasting to next of {len(_WEBSOCKET_CLIENTS)} websockets"
+            )
 
             if websocket.client_state == WebSocketState.CONNECTED:
                 try:
                     await websocket.send_json(samples.tolist())
                 except (WebSocketDisconnect, ConnectionClosedError):
                     LOGGER.debug("Websocket dropped, will be reaped")
-                
+
             if websocket.client_state != WebSocketState.CONNECTED:
                 LOGGER.debug("Reaping closed socket")
                 _WEBSOCKET_CLIENTS.remove(websocket)
-    
+
     return True  # receive more sample callbacks
 
 
-def main(host='0.0.0.0', port=8000):
+def main(host="0.0.0.0", port=8000):
     uvicorn.run(app, host=host, port=port)
