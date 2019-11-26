@@ -108,7 +108,7 @@ class _AsyncSdrSampler:
 
         async for samples in self._sdr.stream(num_samples_or_bytes=self._sample_size):
             LOGGER.debug(f"Got {len(samples)} samples in a {type(samples)}")
-            if not await self._callback(np.absolute(samples)):
+            if not await self._callback(samples):
                 return
             await asyncio.sleep(self._delay)
 
