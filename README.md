@@ -49,13 +49,15 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
     * Each results in an async co-routine being created and has a reference to the websocket
   * ~~@followup how to pause the stream after all WS clients gone?~~
     * Happens automatically, if there are no clients, there are no running coroutines
-* [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
 * [X] ~~*Use the spike experience to re-build the service sketch, nicely*~~ [2019-11-26]
+* [ ] Adopt pytest-bdd
+* [ ] Centre psd like https://github.com/matplotlib/matplotlib/blob/d41775327c1101b3fefc6fcf0fdf12a1a0254d3f/lib/matplotlib/mlab.py#L571
+* [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
 * [ ] Change architecture to improve use of parallel cpu cores
   * put sdr reading & SDE calculation in another process (parallelism avoiding Python's GIL)
   * use async comms to transfer the small (<= 2048 element ndarray>) to the webserver thread
   * see also: https://stackoverflow.com/questions/15639779/why-does-multiprocessing-use-only-a-single-core-after-i-import-numpy
-* [ ] Centre psd like https://github.com/matplotlib/matplotlib/blob/d41775327c1101b3fefc6fcf0fdf12a1a0254d3f/lib/matplotlib/mlab.py#L571
+
 
 
 ### Client
