@@ -98,7 +98,7 @@ async def page(request: Request):
 
 
 @app.websocket("/sde")
-async def iq_stream(websocket: WebSocket):
+async def sde(websocket: WebSocket):
     """Serve websocket requests for SDE measurements
 
     Awaits pings from the client in an infinite loop. Sample data is sent
@@ -113,8 +113,8 @@ async def iq_stream(websocket: WebSocket):
     async with _WEBSOCKET_CLIENTS_LOCK:
         _WEBSOCKET_CLIENTS.append(websocket)
         clients = len(_WEBSOCKET_CLIENTS)
-    
     LOGGER.info(f"Added client, there are {clients} connected")
+    
     try:
         while True:
             ping = await websocket.receive_text()
