@@ -9,9 +9,6 @@ import numpy as np
 from craigs_web_sdr.sdr import _AsyncSdrSampler
 
 
-pytestmark = pytest.mark.asyncio  # All test coroutines marked for pytest-asyncio
-
-
 def _has_rtl_sdr():
     """Convenience for marking tests to run if an RTL SDR is present"""
     return len(RtlSdr.get_device_serial_addresses()) == 1
@@ -29,6 +26,7 @@ async def mocked_callback():
 
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
+@pytest.mark.asyncio
 async def test_callback_is_provided_with_samples_data(
     mocked_callback
 ):
