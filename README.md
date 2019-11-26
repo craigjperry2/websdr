@@ -52,6 +52,7 @@ In this project, i'm experimenting with replacing my normal TODO.md file with (a
 * [X] ~~*Use the spike experience to re-build the service sketch, nicely*~~ [2019-11-26]
 * [ ] Adopt pytest-bdd
 * [ ] Centre psd like https://github.com/matplotlib/matplotlib/blob/d41775327c1101b3fefc6fcf0fdf12a1a0254d3f/lib/matplotlib/mlab.py#L571
+* [ ] Adopt git LFS and persist a samples test fixture https://help.github.com/en/github/managing-large-files/installing-git-large-file-storage
 * [ ] Specify pydantic types for FastAPI to auto-produce the OpenAPI descriptor
 * [ ] Change architecture to improve use of parallel cpu cores
   * put sdr reading & SDE calculation in another process (parallelism avoiding Python's GIL)
