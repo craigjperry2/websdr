@@ -18,7 +18,7 @@ def _has_rtl_sdr():
 
 
 @pytest.fixture
-async def _mocked_callback():
+async def mocked_callback():
     """Setup and teardown an _AsyncSdrSampler with a mock callback"""
     m = CoroutineMock(return_value=False)
     sdr = _AsyncSdrSampler()
@@ -30,12 +30,12 @@ async def _mocked_callback():
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
 async def test_callback_is_provided_with_samples_data(
-    _mocked_callback
+    mocked_callback
 ):
-    _mocked_callback.assert_awaited()
-    _mocked_callback.assert_called()
+    mocked_callback.assert_awaited()
+    mocked_callback.assert_called()
 
-    latest_callback_param = _mocked_callback.call_args[0][0]
+    latest_callback_param = mocked_callback.call_args[0][0]
     assert type(latest_callback_param) is np.ndarray
     assert len(latest_callback_param) > 0
 
