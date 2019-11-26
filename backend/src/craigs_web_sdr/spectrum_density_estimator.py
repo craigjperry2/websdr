@@ -19,10 +19,13 @@ import numpy as np
 from scipy import signal
 
 
-def spectrum_density_estimator(callback, fs=1.2e6*2, window="flattop", nperseg=1024):
-
+def spectrum_density_estimator(callback, fs=1.2e6 * 2, window="flattop", nperseg=1024):
     async def sde_filter(samples):
-        f, psd = signal.welch(samples, fs, window, nperseg, scaling='density', return_onesided=False)
-        return await callback({ "Pxx": np.absolute(psd.round(decimals=9)).tolist(), "f": f.tolist() })
+        f, psd = signal.welch(
+            samples, fs, window, nperseg, scaling="density", return_onesided=False
+        )
+        return await callback(
+            {"Pxx": np.absolute(psd.round(decimals=9)).tolist(), "f": f.tolist()}
+        )
 
     return sde_filter

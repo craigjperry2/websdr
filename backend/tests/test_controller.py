@@ -5,7 +5,12 @@ from starlette.testclient import TestClient
 
 import numpy as np
 
-from craigs_web_sdr.controller import app, _WEBSOCKET_CLIENTS, _WEBSOCKET_CLIENTS_LOCK, broadcast
+from craigs_web_sdr.controller import (
+    app,
+    _WEBSOCKET_CLIENTS,
+    _WEBSOCKET_CLIENTS_LOCK,
+    broadcast,
+)
 
 
 client = TestClient(app)
@@ -32,7 +37,10 @@ def test_serves_page():
     assert response.status_code == 200
     print(response.text)
     assert "<title>Craig's Web SDR</title>" in response.text
-    assert '<link href="http://testserver/static/styles.css" rel="stylesheet">' in response.text
+    assert (
+        '<link href="http://testserver/static/styles.css" rel="stylesheet">'
+        in response.text
+    )
     assert "</html>" in response.text
 
 
@@ -47,22 +55,26 @@ def test_unknown_requests_generate_404():
     assert response.status_code == 404
 
 
-@patch('craigs_web_sdr.controller.sdr')
+@patch("craigs_web_sdr.controller.sdr")
 def test_sdr_startup_and_shutdown_events_are_triggered(mock_sdr):
     stopped = False
+
     async def awaitable():
         nonlocal stopped
         stopped = True
+
     mock_sdr.stop.return_value = awaitable()
-    
+
     with TestClient(app) as client:
         mock_sdr.start.assert_called()
     assert stopped == True
 
 
-@patch('craigs_web_sdr.controller.sdr')
+@patch("craigs_web_sdr.controller.sdr")
 @pytest.mark.asyncio
-async def test_consumes_infinite_pings_on_sde_websocket(mock_sdr, ndarray_of_float, cleanup_websockets):
+async def test_consumes_infinite_pings_on_sde_websocket(
+    mock_sdr, ndarray_of_float, cleanup_websockets
+):
     with client.websocket_connect("/sde") as websocket:
         websocket.send_text("Ping...")
         websocket.send_text("Ping...")

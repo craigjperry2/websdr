@@ -11,8 +11,10 @@ from craigs_web_sdr.spectrum_density_estimator import spectrum_density_estimator
 @pytest.fixture
 def callback(ndarray_of_float):
     """Substitute for the broadcast() func in controller"""
+
     async def awaitable():
         return True
+
     return Mock(return_value=awaitable())
 
 
@@ -22,7 +24,7 @@ def ndarray_of_complex():
     return np.ones(1, dtype="complex128")
 
 
-@patch('craigs_web_sdr.spectrum_density_estimator.signal')
+@patch("craigs_web_sdr.spectrum_density_estimator.signal")
 @pytest.mark.asyncio
 async def test_callsback_with_parameter(signal_mock, callback, ndarray_of_float):
     signal_mock.welch.return_value = (ndarray_of_float, ndarray_of_float)

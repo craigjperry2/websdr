@@ -27,9 +27,7 @@ async def mocked_callback():
 
 @pytest.mark.skipif(not _has_rtl_sdr(), reason="This test requires an RTL SDR dongle")
 @pytest.mark.asyncio
-async def test_callback_is_provided_with_samples_data(
-    mocked_callback
-):
+async def test_callback_is_provided_with_samples_data(mocked_callback):
     mocked_callback.assert_awaited()
     mocked_callback.assert_called()
 
