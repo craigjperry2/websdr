@@ -25,7 +25,7 @@ def spectrum_density_estimator(callback, fs=1.2e6 * 2, window="flattop", nperseg
             samples, fs, window, nperseg, scaling="density", return_onesided=False
         )
         return await callback(
-            {"Pxx": np.absolute(psd.round(decimals=9)).tolist(), "f": f.tolist()}
+            {"Pxx": np.absolute(psd).round(decimals=9).tolist(), "f": f.tolist()}
         )
 
     return sde_filter
