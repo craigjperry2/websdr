@@ -10,35 +10,7 @@ from pytest_bdd import (
     when,
 )
 
-import os
-import signal
-import platform
-import subprocess
 import logging
-
-from rtlsdr import RtlSdr
-
-
-@pytest.fixture(scope="session")
-def server():
-    cmd_line = ["backend"]
-
-    if platform.system() is "Windows":
-        pro = subprocess.Popen(cmd_line, shell=True)
-    else:
-        pro = subprocess.Popen(cmd_line, shell=True, preexec_fn=os.setsid)
-
-    yield pro
-
-    if platform.system() is "Windows":
-        os.kill(pro.pid, signal.CTRL_C_EVENT)
-    else:
-        os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
-
-
-@pytest.fixture(scope="session")
-def dongles():
-    return RtlSdr.get_device_serial_addresses()
 
 
 @pytest.fixture
@@ -69,8 +41,7 @@ def test_stream_welchs_method_spectral_density_estimates():
 
 @given("the SDR dongle is ready")
 def sdr_present(dongles):
-    if len(dongles) != 1:
-        return pytest.skip("Test requires 1 RTL SDR dongle to be present")
+    pass  # extracted to shared fixture
 
 
 @given("the websocket server is ready")
