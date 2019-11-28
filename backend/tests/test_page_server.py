@@ -17,13 +17,12 @@ def test_serve_page_and_assets():
 
 @given("a client connects with a web browser to <url> using <method>")
 def client(url, method, server):
-    logging.info(f"Spawned server with pid {server.pid}")
     return requests.request(method, "http://127.0.0.1:8000" + url)
 
 
 @when("the webserver is ready")
-def the_webserver_is_ready():
-    pass
+def the_webserver_is_ready(server):
+    logging.info(f"Spawned server with pid {server.pid}")
 
 
 @then("they receive an http response containing <content> with <code>")
