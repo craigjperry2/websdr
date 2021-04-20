@@ -33,7 +33,7 @@ parse-type==0.5.2
 pathspec==0.6.0
 pluggy==0.13.1
 promise==2.2.1
-py==1.8.0
+py==1.10.0
 pydantic==1.1.1
 pyparsing==2.4.5
 pyrtlsdr==0.2.91
