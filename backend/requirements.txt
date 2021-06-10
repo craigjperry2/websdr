@@ -13,7 +13,7 @@ Click==7.0
 colorama==0.4.1
 dnspython==1.16.0
 email-validator==1.0.5
-fastapi==0.44.0
+fastapi==0.65.2
 glob2==0.7
 graphene==2.1.8
 graphql-core==2.2.1
